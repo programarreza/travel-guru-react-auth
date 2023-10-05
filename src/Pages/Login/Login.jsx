@@ -10,7 +10,7 @@ import { Toaster, toast } from "react-hot-toast";
 const Login = () => {
 	const {googleLogin, githubLogin, signIn } = useContext(AuthContext)
 
-	// const [error, setError] = useState('')
+	const [error, setError] = useState('')
 
 
 	const handleLogin = e => {
@@ -26,7 +26,7 @@ const Login = () => {
 			toast.success("Login successful")
 		})
 		.catch(error => {
-			console.error(error.message)
+			setError(error.message)
 		})
 	}
 
@@ -56,6 +56,7 @@ const Login = () => {
 									</label>
 								</div>
 							</div>
+							<p className="text-red-600">{error}</p>
 							<div className="form-control mt-6">
 								<input className="btn btn-primary" type="submit" value="Login" />
 							</div>

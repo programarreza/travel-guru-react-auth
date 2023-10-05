@@ -1,8 +1,24 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, Navigate, useNavigate } from 'react-router-dom';
 import logo from '../../../../assets/Frame.png'
 import Search from './Search';
+import { useContext } from 'react';
+import { AuthContext } from '../../../../AuthProvider/AuthProvider';
 
 const Navbar = () => {
+	const {user, logOut} = useContext(AuthContext)
+	console.log(9, user);
+	const navigate = useNavigate()
+
+	const handleSignOut = () => {
+		logOut()
+		.then(result => {
+			console.log(result.user);
+			Navigate("/")
+		})
+		.catch(err => {
+			console.log(err.message);
+		})
+	}
 
 	const navLinks = <div className='flex gap-12 items-center font-medium text-white'>
 		<NavLink
@@ -37,9 +53,17 @@ const Navbar = () => {
 		>
 			Contact
 		</NavLink>
+		
+		{
+			user ? 
+			<button onClick={handleSignOut} className='py-3 px-7 w-full text-black font-medium rounded-lg bg-[#F9A51A]'>{user?.displayName}</button>
+		
+		:
 		<Link to={"/login"}>
 			<button className='py-3 px-7 text-black font-medium rounded-lg bg-[#F9A51A]'>Login</button>
 		</Link>
+		
+		}
 	</div>
 
 	return (
@@ -61,6 +85,7 @@ const Navbar = () => {
 			<div className="navbar-end hidden lg:flex">
 				<ul className="menu menu-horizontal px-1">
 					{navLinks}
+					
 				</ul>
 			</div>
 		</div>
