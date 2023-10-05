@@ -1,9 +1,7 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink } from "react-router-dom";
 import logo from '../../../../assets/Frame.png'
-import Search from './Search';
 
-const Navbar = () => {
-
+const Navbar_2 = () => {
 	const navLinks = <div className='flex gap-12 items-center font-medium text-white'>
 		<NavLink
 			to="/"
@@ -56,7 +54,7 @@ const Navbar = () => {
 				<a className="normal-case text-xl"><img src={logo} alt="" /></a>
 			</div>
 			<div className="navbar-center mr-24">
-				<Search></Search>
+				
 			</div>
 			<div className="navbar-end hidden lg:flex">
 				<ul className="menu menu-horizontal px-1">
@@ -67,4 +65,4 @@ const Navbar = () => {
 	);
 };
 
-export default Navbar;
+export default Navbar_2;
