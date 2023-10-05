@@ -1,10 +1,35 @@
-import { Link } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
 import { BsGithub } from "react-icons/bs";
+import { FcGoogle } from "react-icons/fc";
+import { Link } from "react-router-dom";
 import Navbar_2 from "../../components/Header/Shared/Navbar/Navbar_2";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { Toaster, toast } from "react-hot-toast";
 
 
 const Login = () => {
+	const {googleLogin, githubLogin, signIn } = useContext(AuthContext)
+
+	// const [error, setError] = useState('')
+
+
+	const handleLogin = e => {
+		e.preventDefault();
+		const form = new FormData(e.currentTarget)
+		const email = form.get("email")
+		const password= form.get("password")
+		console.log(email, password);
+
+		signIn(email, password)
+		.then(result  => {
+			console.log(result.user);
+			toast.success("Login successful")
+		})
+		.catch(error => {
+			console.error(error.message)
+		})
+	}
+
 	return (
 		<>
 		<Navbar_2></Navbar_2>
@@ -15,12 +40,12 @@ const Login = () => {
 
 					</div>
 					<div className="card flex-shrink-0 w-[400px] shadow-2xl bg-base-100">
-						<form className="card-body">
+						<form onSubmit={handleLogin} className="card-body">
 							<div className="form-control">
-								<input type="email" placeholder="Email" className="input input-bordered" required />
+								<input type="text" name="email" placeholder="Username or Email" className="input input-bordered" required />
 							</div>
 							<div className="form-control">
-								<input type="password" placeholder="Password" className="input input-bordered" required />
+								<input type="password" name="password" placeholder="Password" className="input input-bordered" required />
 								<div className="flex justify-between">
 									<div className="flex items-center ">
 										<input type="checkbox" name="checkbox" id="" className="mr-3" />
@@ -43,10 +68,10 @@ const Login = () => {
 								<span><hr className="w-36" /></span>
 							</div>
 
-							<button className=" w-full border rounded-2xl py-2 flex items-center gap-2"><FcGoogle className="text-2xl ml-2" /> <span className=" mx-auto">Continue with Google</span></button>
-							<button className=" w-full border rounded-2xl py-2 flex items-center gap-2"><BsGithub className="text-2xl ml-2" /> <span className=" mx-auto">Continue with Github</span></button>
+							<button onClick={googleLogin} className=" w-full border rounded-2xl py-2 flex items-center gap-2"><FcGoogle className="text-2xl ml-2" /> <span className=" mx-auto">Continue with Google</span></button>
+							<button onClick={githubLogin} className=" w-full border rounded-2xl py-2 flex items-center gap-2"><BsGithub className="text-2xl ml-2" /> <span className=" mx-auto">Continue with Github</span></button>
 						</form>
-
+						<Toaster/>
 					</div>
 				</div>
 			</div>
